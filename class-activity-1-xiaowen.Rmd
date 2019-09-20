@@ -1,0 +1,31 @@
+---
+title: "Class_activity_1"
+author: "Xiaowen Chen"
+date: "9/19/2019"
+output: html_document
+---
+
+library(tidyr)
+library(dplyr)
+#step 4
+DF1<-read.csv("swirl-data.csv",header=TRUE)
+View(DF1)
+#step 5
+DF2<-select(DF1,hash,lesson_name,attempt)
+DF2
+#step 6
+DF3<-DF2%>%group_by(hash,lesson_name)%>%summarise(attempt=sum(attempt))
+DF3
+#step 7 and 8
+DF3b<-spread(DF3,lesson_name,attempt)
+DF3b
+#step 9
+DF4<-select(DF1,hash,lesson_name,correct)
+DF4
+#step 10 #still working on
+DF4$correct <- ifelse(DF4$correct == TRUE, 1, 
+                      ifelse(DF4$correct == NA, NA, 0))
+DF4$correct 
+#step 11
+DF5 <- DF4 %>% group_by(hash, lesson_name) %>% summarise(mean.correct = mean(correct, na.rm = TRUE))
+#step 12
